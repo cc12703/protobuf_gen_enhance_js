@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+
+package collect.material;
+
+
+service Api {
+
+	rpc testNormal(TestNormalReq) returns(TestNormalResp) {}
+	rpc testNest(TestNestReq) returns(TestNestResp) {}
+	rpc testList(TestListReq) returns(TestListResp) {}
+	rpc testMap(TestMapReq) returns(TestMapResp) {}
+	
+}
+
+
+
+message TestNormalReq {
+	string type = 1;
+	string uid = 2;
+}
+message TestNormalResp { }
+
+
+message TestNestReq {
+	string uid = 1;
+	int64 addDate = 2;
+	
+
+	message SubInfo {
+		string contentUrl = 1;
+		string thumbUrl = 2;
+	}
+
+	SubInfo sInfo = 3;
+}
+message TestNestResp { }
+
+
+message TestListReq {
+	int32 page = 1;
+	repeated string fType = 2;
+}
+message TestListResp { }
+
+
+message TestMapReq {
+	int32 limit = 1;
+	map<string, string> gSimilar = 2;	
+}
+message TestMapResp { }
+
+
