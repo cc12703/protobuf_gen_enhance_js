@@ -259,6 +259,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestNormalReq.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestNormalReq;
+  proto.collect.material.TestNormalReq.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestNormalReq.fromObject = function(obj, msg) {
   if('type' in obj) {
   var vtype = obj.type;
@@ -433,6 +438,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestNormalResp.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestNormalResp;
+  proto.collect.material.TestNormalResp.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestNormalResp.fromObject = function(obj, msg) {
   }
 }
@@ -543,6 +553,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestNestReq.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestNestReq;
+  proto.collect.material.TestNestReq.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestNestReq.fromObject = function(obj, msg) {
   if('uid' in obj) {
   var vuid = obj.uid;
@@ -700,6 +715,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestNestReq.SubInfo.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestNestReq.SubInfo;
+  proto.collect.material.TestNestReq.SubInfo.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestNestReq.SubInfo.fromObject = function(obj, msg) {
   if('contentUrl' in obj) {
   var vcontentUrl = obj.contentUrl;
@@ -947,6 +967,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestNestResp.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestNestResp;
+  proto.collect.material.TestNestResp.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestNestResp.fromObject = function(obj, msg) {
   }
 }
@@ -1063,6 +1088,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestListReq.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestListReq;
+  proto.collect.material.TestListReq.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestListReq.fromObject = function(obj, msg) {
   if('page' in obj) {
   var vpage = obj.page;
@@ -1256,6 +1286,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestListResp.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestListResp;
+  proto.collect.material.TestListResp.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestListResp.fromObject = function(obj, msg) {
   }
 }
@@ -1365,6 +1400,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestMapReq.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestMapReq;
+  proto.collect.material.TestMapReq.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestMapReq.fromObject = function(obj, msg) {
   if('limit' in obj) {
   var vlimit = obj.limit;
@@ -1545,6 +1585,11 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     }
     return obj;
   };
+  proto.collect.material.TestMapResp.buildObject = function(obj) {
+  var msg = new proto.collect.material.TestMapResp;
+  proto.collect.material.TestMapResp.fromObject(obj, msg);
+  return msg;
+  }
   proto.collect.material.TestMapResp.fromObject = function(obj, msg) {
   }
 }

@@ -22,7 +22,7 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo) {
 		item.after(`
 			${type}.fromObject = function(obj) {
 				${sType}.fromObject(obj, this);
-			}
+			};
 		`)
 	})
 	ast.find('$_$type.toObject = function(includeInstance, msg) {}').each(item => {
@@ -58,7 +58,21 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo) {
 
 		})
 
-		codes.push('}')
+		codes.push('};\r')
+
+		item.after(codes.join('\r'))
+	})
+
+	ast.find('$_$type.toObject = function(includeInstance, msg) {}').each(item => {
+		const type = item.match.type[0].value
+		const typeName = type.replace(`proto.${pInfo.package}.`, '')
+		const codes = []
+
+		codes.push(`${type}.buildObject = function(obj) {`)
+		codes.push(`var msg = new ${type};`)	
+		codes.push(`${type}.fromObject(obj, msg);`)
+		codes.push('return msg;')
+		codes.push('};\r')
 
 		item.after(codes.join('\r'))
 	})
@@ -137,6 +151,7 @@ function processDef(ast: GoGoAST) {
 
 				static toObject(includeInstance: boolean, msg: $_$type): $_$type.AsObject;
 				static fromObject(obj: $_$type.AsObject, msg: $_$type): void;
+				static buildObject(obj: $_$type.AsObject): $_$type
 				$$$
 			}`)
 }

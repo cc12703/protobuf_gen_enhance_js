@@ -27,6 +27,15 @@ function doTestNormal() {
 	assert(info.getUid() === '222-222')
 }
 
+function doTestNormalForBuild() {
+	const info = pb.TestNormalReq.buildObject({
+		type: 'type-two',
+		uid: '222-222'
+	})
+	assert(info.getType() === 'type-two')
+	assert(info.getUid() === '222-222')
+}
+
 function doTestNest() {
 	const info = new pb.TestNestReq()
 	info.fromObject({
@@ -75,3 +84,5 @@ doTestNormal()
 doTestNest()
 doTestList()
 doTestMap()
+
+doTestNormalForBuild()

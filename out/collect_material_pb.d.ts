@@ -12,6 +12,7 @@ export class TestNormalReq extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestNormalReq): TestNormalReq.AsObject;
 				static fromObject(obj: TestNormalReq.AsObject, msg: TestNormalReq): void;
+				static buildObject(obj: TestNormalReq.AsObject): TestNormalReq
 				getType(): string;
 setType(value: string): TestNormalReq;
 getUid(): string;
@@ -37,6 +38,7 @@ export class TestNormalResp extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestNormalResp): TestNormalResp.AsObject;
 				static fromObject(obj: TestNormalResp.AsObject, msg: TestNormalResp): void;
+				static buildObject(obj: TestNormalResp.AsObject): TestNormalResp
 				serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
@@ -56,6 +58,7 @@ export class TestNestReq extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestNestReq): TestNestReq.AsObject;
 				static fromObject(obj: TestNestReq.AsObject, msg: TestNestReq): void;
+				static buildObject(obj: TestNestReq.AsObject): TestNestReq
 				getUid(): string;
 setUid(value: string): TestNestReq;
 getAddDate(): number;
@@ -86,6 +89,7 @@ export namespace TestNestReq {
 
                     static toObject(includeInstance: boolean, msg: SubInfo): SubInfo.AsObject;
                     static fromObject(obj: SubInfo.AsObject, msg: SubInfo): void;
+                    static buildObject(obj: SubInfo.AsObject): SubInfo
                     getContentUrl(): string;
     setContentUrl(value: string): SubInfo;
     getThumbUrl(): string;
@@ -113,6 +117,7 @@ export class TestNestResp extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestNestResp): TestNestResp.AsObject;
 				static fromObject(obj: TestNestResp.AsObject, msg: TestNestResp): void;
+				static buildObject(obj: TestNestResp.AsObject): TestNestResp
 				serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
@@ -132,6 +137,7 @@ export class TestListReq extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestListReq): TestListReq.AsObject;
 				static fromObject(obj: TestListReq.AsObject, msg: TestListReq): void;
+				static buildObject(obj: TestListReq.AsObject): TestListReq
 				getPage(): number;
 setPage(value: number): TestListReq;
 clearFTypeList(): void;
@@ -159,6 +165,7 @@ export class TestListResp extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestListResp): TestListResp.AsObject;
 				static fromObject(obj: TestListResp.AsObject, msg: TestListResp): void;
+				static buildObject(obj: TestListResp.AsObject): TestListResp
 				serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
@@ -178,6 +185,7 @@ export class TestMapReq extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestMapReq): TestMapReq.AsObject;
 				static fromObject(obj: TestMapReq.AsObject, msg: TestMapReq): void;
+				static buildObject(obj: TestMapReq.AsObject): TestMapReq
 				getLimit(): number;
 setLimit(value: number): TestMapReq;
 getGSimilarMap(): jspb.Map<string, string>;
@@ -204,6 +212,7 @@ export class TestMapResp extends jspb.Message {
 
 				static toObject(includeInstance: boolean, msg: TestMapResp): TestMapResp.AsObject;
 				static fromObject(obj: TestMapResp.AsObject, msg: TestMapResp): void;
+				static buildObject(obj: TestMapResp.AsObject): TestMapResp
 				serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
