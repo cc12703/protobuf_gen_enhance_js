@@ -9,16 +9,17 @@ import * as protoer from '@/proto'
 import * as renamer from '@/rename'
 import * as builder from '@/build'
 
+import { EnhanceConfig } from '@/util'
 
 
 
-
-export async function enhance(inputDir: string, outputDir: string, protoDir: string, isCopyOther: boolean) {
+export async function enhance(inputDir: string, outputDir: string, protoDir: string, cfg: EnhanceConfig) {
 
 	console.log(`cmd input ${inputDir}`)
 	console.log(`cmd output ${outputDir}`)
 	console.log(`cmd proto ${protoDir}`)
-	console.log(`cmd isCopyOther ${isCopyOther}`)
+	console.log(`cmd isCopyOther ${cfg.isCopyOther}`)
+	console.log(`cmd isDelTypeSuffix ${cfg.isDelTypeSuffix}`)
 
 	fse.ensureDirSync(outputDir)
 
@@ -30,14 +31,14 @@ export async function enhance(inputDir: string, outputDir: string, protoDir: str
 		const defAST = gogocode.loadFile(info.defFile, {}) 
 		const implAST = gogocode.loadFile(info.implFile, {}) 
 
-		renamer.process(defAST, implAST, pInfo)
-		builder.process(defAST, implAST, pInfo)
+		renamer.process(defAST, implAST, pInfo, cfg)
+		builder.process(defAST, implAST, pInfo, cfg)
 
 		writeToFile(defAST, info.defFile, outputDir)	
 		writeToFile(implAST, info.implFile, outputDir)	
 	}	
 
-	if(isCopyOther) {
+	if(cfg.isCopyOther) {
 		for (const file of cInfo.other) {
 			const dstFile = path.join(outputDir, path.basename(file))
 			fse.copySync(file, dstFile)

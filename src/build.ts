@@ -8,14 +8,14 @@ import * as util from '@/util'
 
 
 
-export function process(defAST: GoGoAST, implAST: GoGoAST, pInfo: ProtoInfo) {
+export function process(defAST: GoGoAST, implAST: GoGoAST, pInfo: ProtoInfo, cInfo: util.EnhanceConfig) {
 	processDef(defAST)
-	processImpl(implAST, pInfo)
+	processImpl(implAST, pInfo, cInfo)
 }
 
 
 
-function processImpl(ast: GoGoAST, pInfo: ProtoInfo) {
+function processImpl(ast: GoGoAST, pInfo: ProtoInfo, cInfo: util.EnhanceConfig) {
 	ast.find('$_$type.toObject = function(opt_includeInstance) {}').each(item => {
 		const type = item.match.type[0].value
 		const sType = type.replace('.prototype', '')
@@ -32,16 +32,16 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo) {
 
 		codes.push(`${type}.fromObject = function(obj, msg) {`)
 		pInfo.messages.get(typeName)?.fields.forEach(field => {
-			const fieldName = buildFieldName(field)
+			const fieldName = buildFieldName(field, cInfo)
 			codes.push(`if('${fieldName}' in obj) {`)
 			if(field.type === ProtoFieldType.NORMAL) {
 				const vName = `v${field.name}`
-				buildTransformCodeOfNormal(vName, field, pInfo).forEach(code => codes.push(code))
+				buildTransformCodeOfNormal(vName, field, pInfo, cInfo).forEach(code => codes.push(code))
 				codes.push(`msg.set${util.strToFirstUpperCase(field.name)}(${vName})`)
 			}
 			else if(field.type === ProtoFieldType.LIST) {
 				const vName = `v${field.name}`
-				buildTransformCodeOfList(vName, field, pInfo).forEach(code => codes.push(code))
+				buildTransformCodeOfList(vName, field, pInfo, cInfo).forEach(code => codes.push(code))
 				codes.push(`msg.set${util.strToFirstUpperCase(fieldName)}(${vName})`)
 			}
 			else if(field.type === ProtoFieldType.MAP) {
@@ -49,7 +49,7 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo) {
 				codes.push(`obj.${fieldName}.forEach(pair => {`)
 				codes.push(`var ${vName}Key = pair[0];`)
 				codes.push(`var ${vName}Val = pair[1];`)
-				buildTransformCodeOfMap(`${vName}Key`, `${vName}Val`, field, pInfo).forEach(code => codes.push(code))
+				buildTransformCodeOfMap(`${vName}Key`, `${vName}Val`, field, pInfo, cInfo).forEach(code => codes.push(code))
 				codes.push(`})`)
 				
 			}			
@@ -78,21 +78,22 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo) {
 	})
 }
 
-function buildFieldName(field: ProtoFieldInfo): string {
+function buildFieldName(field: ProtoFieldInfo, cInfo: util.EnhanceConfig): string {
 	if(field.type === ProtoFieldType.NORMAL)
 		return field.name
 	else if(field.type === ProtoFieldType.LIST)
-		return `${field.name}List`
+		return cInfo.isDelTypeSuffix? field.name : `${field.name}List`
 	else if(field.type === ProtoFieldType.MAP)
-		return `${field.name}Map`
+		return cInfo.isDelTypeSuffix? field.name : `${field.name}Map`
 	else
 		return field.name
 }
 
 
 
-function buildTransformCodeOfNormal(varName: string, field: ProtoFieldInfo, pInfo: ProtoInfo): string[] {
-	const fieldName = buildFieldName(field)
+function buildTransformCodeOfNormal(varName: string, field: ProtoFieldInfo, pInfo: ProtoInfo, 
+									cInfo: util.EnhanceConfig): string[] {
+	const fieldName = buildFieldName(field, cInfo)
 	if(field.dType === ProtoFieldDataType.NORMAL) {
 		return [`var ${varName} = obj.${fieldName};`]
 	}
@@ -105,8 +106,9 @@ function buildTransformCodeOfNormal(varName: string, field: ProtoFieldInfo, pInf
 }
 
 
-function buildTransformCodeOfList(varName: string, field: ProtoFieldInfo, pInfo: ProtoInfo): string[] {
-	const fieldName = buildFieldName(field)
+function buildTransformCodeOfList(varName: string, field: ProtoFieldInfo, pInfo: ProtoInfo, 
+									cInfo: util.EnhanceConfig): string[] {
+	const fieldName = buildFieldName(field, cInfo)
 	if(field.dType === ProtoFieldDataType.NORMAL) {
 		return [`var ${varName} = obj.${fieldName};`]
 	}
@@ -122,8 +124,9 @@ function buildTransformCodeOfList(varName: string, field: ProtoFieldInfo, pInfo:
 }
 
 
-function buildTransformCodeOfMap(keyVarName: string, valVarName: string, field: ProtoFieldInfo, pInfo: ProtoInfo): string[] {
-	const fieldName = buildFieldName(field)
+function buildTransformCodeOfMap(keyVarName: string, valVarName: string, field: ProtoFieldInfo, pInfo: ProtoInfo, 
+								cInfo: util.EnhanceConfig): string[] {
+	const fieldName = buildFieldName(field, cInfo)
 	if(field.dType === ProtoFieldDataType.NORMAL) {
 		return [`msg.get${util.strToFirstUpperCase(fieldName)}().set(${keyVarName}, ${valVarName})`]
 	}

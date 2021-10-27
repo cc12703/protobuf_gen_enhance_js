@@ -236,7 +236,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestNormalReq.prototype.fromObject = function(obj) {
       proto.collect.material.TestNormalReq.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -263,7 +263,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestNormalReq;
   proto.collect.material.TestNormalReq.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestNormalReq.fromObject = function(obj, msg) {
   if('type' in obj) {
   var vtype = obj.type;
@@ -273,7 +273,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var vuid = obj.uid;
   msg.setUid(vuid)
   }
-  }
+  };
 }
 
 
@@ -416,7 +416,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestNormalResp.prototype.fromObject = function(obj) {
       proto.collect.material.TestNormalResp.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -442,9 +442,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestNormalResp;
   proto.collect.material.TestNormalResp.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestNormalResp.fromObject = function(obj, msg) {
-  }
+  };
 }
 
 
@@ -529,7 +529,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestNestReq.prototype.fromObject = function(obj) {
       proto.collect.material.TestNestReq.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -545,7 +545,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
     var f, obj = {
       uid: jspb.Message.getFieldWithDefault(msg, 1, ""),
       addDate: jspb.Message.getFieldWithDefault(msg, 2, 0),
-      sInfo: (f = msg.getSinfo()) && proto.collect.material.TestNestReq.SubInfo.toObject(includeInstance, f)
+      sInfo: (f = msg.getSInfo()) && proto.collect.material.TestNestReq.SubInfo.toObject(includeInstance, f)
     };
 
     if (includeInstance) {
@@ -557,7 +557,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestNestReq;
   proto.collect.material.TestNestReq.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestNestReq.fromObject = function(obj, msg) {
   if('uid' in obj) {
   var vuid = obj.uid;
@@ -572,7 +572,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   vsInfo.fromObject(obj.sInfo);
   msg.setSInfo(vsInfo)
   }
-  }
+  };
 }
 
 
@@ -692,7 +692,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestNestReq.SubInfo.prototype.fromObject = function(obj) {
       proto.collect.material.TestNestReq.SubInfo.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -719,7 +719,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestNestReq.SubInfo;
   proto.collect.material.TestNestReq.SubInfo.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestNestReq.SubInfo.fromObject = function(obj, msg) {
   if('contentUrl' in obj) {
   var vcontentUrl = obj.contentUrl;
@@ -729,7 +729,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var vthumbUrl = obj.thumbUrl;
   msg.setThumbUrl(vthumbUrl)
   }
-  }
+  };
 }
 
 
@@ -909,7 +909,7 @@ proto.collect.material.TestNestReq.prototype.setSInfo = function(value) {
  * @return {!proto.collect.material.TestNestReq} returns this
  */
 proto.collect.material.TestNestReq.prototype.clearSinfo = function() {
-  return this.setSinfo(undefined);
+  return this.setSInfo(undefined);
 };
 
 
@@ -945,7 +945,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestNestResp.prototype.fromObject = function(obj) {
       proto.collect.material.TestNestResp.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -971,9 +971,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestNestResp;
   proto.collect.material.TestNestResp.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestNestResp.fromObject = function(obj, msg) {
-  }
+  };
 }
 
 
@@ -1065,7 +1065,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestListReq.prototype.fromObject = function(obj) {
       proto.collect.material.TestListReq.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -1080,7 +1080,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.collect.material.TestListReq.toObject = function(includeInstance, msg) {
     var f, obj = {
       page: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      fTypeList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+      fType: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
     };
 
     if (includeInstance) {
@@ -1092,17 +1092,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestListReq;
   proto.collect.material.TestListReq.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestListReq.fromObject = function(obj, msg) {
   if('page' in obj) {
   var vpage = obj.page;
   msg.setPage(vpage)
   }
-  if('fTypeList' in obj) {
-  var vfType = obj.fTypeList;
-  msg.setFTypeList(vfType)
+  if('fType' in obj) {
+  var vfType = obj.fType;
+  msg.setFType(vfType)
   }
-  }
+  };
 }
 
 
@@ -1176,7 +1176,7 @@ proto.collect.material.TestListReq.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getFTypeList();
+  f = message.getFType();
   if (f.length > 0) {
     writer.writeRepeatedString(
       2,
@@ -1208,7 +1208,7 @@ proto.collect.material.TestListReq.prototype.setPage = function(value) {
  * repeated string fType = 2;
  * @return {!Array<string>}
  */
-proto.collect.material.TestListReq.prototype.getFTypeList = function() {
+proto.collect.material.TestListReq.prototype.getFType = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
@@ -1217,7 +1217,7 @@ proto.collect.material.TestListReq.prototype.getFTypeList = function() {
  * @param {!Array<string>} value
  * @return {!proto.collect.material.TestListReq} returns this
  */
-proto.collect.material.TestListReq.prototype.setFTypeList = function(value) {
+proto.collect.material.TestListReq.prototype.setFType = function(value) {
   return jspb.Message.setField(this, 2, value || []);
 };
 
@@ -1236,8 +1236,8 @@ proto.collect.material.TestListReq.prototype.addFType = function(value, opt_inde
  * Clears the list making it empty but non-null.
  * @return {!proto.collect.material.TestListReq} returns this
  */
-proto.collect.material.TestListReq.prototype.clearFTypeList = function() {
-  return this.setFtypeList([]);
+proto.collect.material.TestListReq.prototype.clearFType = function() {
+  return this.setFType([]);
 };
 
 
@@ -1264,7 +1264,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestListResp.prototype.fromObject = function(obj) {
       proto.collect.material.TestListResp.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -1290,9 +1290,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestListResp;
   proto.collect.material.TestListResp.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestListResp.fromObject = function(obj, msg) {
-  }
+  };
 }
 
 
@@ -1377,7 +1377,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestMapReq.prototype.fromObject = function(obj) {
       proto.collect.material.TestMapReq.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -1392,7 +1392,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.collect.material.TestMapReq.toObject = function(includeInstance, msg) {
     var f, obj = {
       limit: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      gSimilarMap: (f = msg.getGsimilarMap()) ? f.toObject(includeInstance, undefined) : []
+      gSimilar: (f = msg.getGSimilar()) ? f.toObject(includeInstance, undefined) : []
     };
 
     if (includeInstance) {
@@ -1404,20 +1404,20 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestMapReq;
   proto.collect.material.TestMapReq.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestMapReq.fromObject = function(obj, msg) {
   if('limit' in obj) {
   var vlimit = obj.limit;
   msg.setLimit(vlimit)
   }
-  if('gSimilarMap' in obj) {
-  obj.gSimilarMap.forEach(pair => {
-  var vgSimilarMapKey = pair[0];
-  var vgSimilarMapVal = pair[1];
-  msg.getGSimilarMap().set(vgSimilarMapKey, vgSimilarMapVal)
+  if('gSimilar' in obj) {
+  obj.gSimilar.forEach(pair => {
+  var vgSimilarKey = pair[0];
+  var vgSimilarVal = pair[1];
+  msg.getGSimilar().set(vgSimilarKey, vgSimilarVal)
   })
   }
-  }
+  };
 }
 
 
@@ -1452,7 +1452,7 @@ proto.collect.material.TestMapReq.deserializeBinaryFromReader = function(msg, re
       msg.setLimit(value);
       break;
     case 2:
-      var value = msg.getGSimilarMap();
+      var value = msg.getGSimilar();
       reader.readMessage(value, function(message, reader) {
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
          });
@@ -1493,7 +1493,7 @@ proto.collect.material.TestMapReq.serializeBinaryToWriter = function(message, wr
       f
     );
   }
-  f = message.getGSimilarMap(true);
+  f = message.getGSimilar(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
   }
@@ -1524,7 +1524,7 @@ proto.collect.material.TestMapReq.prototype.setLimit = function(value) {
  * empty, instead returning `undefined`
  * @return {!jspb.Map<string,string>}
  */
-proto.collect.material.TestMapReq.prototype.getGSimilarMap = function(opt_noLazyCreate) {
+proto.collect.material.TestMapReq.prototype.getGSimilar = function(opt_noLazyCreate) {
   return /** @type {!jspb.Map<string,string>} */ (
       jspb.Message.getMapField(this, 2, opt_noLazyCreate,
       null));
@@ -1535,8 +1535,8 @@ proto.collect.material.TestMapReq.prototype.getGSimilarMap = function(opt_noLazy
  * Clears values from the map. The map will be non-null.
  * @return {!proto.collect.material.TestMapReq} returns this
  */
-proto.collect.material.TestMapReq.prototype.clearGSimilarMap = function() {
-  this.getGsimilarMap().clear();
+proto.collect.material.TestMapReq.prototype.clearGSimilar = function() {
+  this.getGSimilar().clear();
   return this;};
 
 
@@ -1563,7 +1563,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 
   proto.collect.material.TestMapResp.prototype.fromObject = function(obj) {
       proto.collect.material.TestMapResp.fromObject(obj, this);
-  }
+  };
 
 
   /**
@@ -1589,9 +1589,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var msg = new proto.collect.material.TestMapResp;
   proto.collect.material.TestMapResp.fromObject(obj, msg);
   return msg;
-  }
+  };
   proto.collect.material.TestMapResp.fromObject = function(obj, msg) {
-  }
+  };
 }
 
 

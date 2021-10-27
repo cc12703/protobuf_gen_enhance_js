@@ -58,11 +58,11 @@ function doTestList() {
 	const info = new pb.TestListReq()
 	info.fromObject({
 		page: 1,
-		fTypeList: ['filter-one', 'filter-two'],
+		fType: ['filter-one', 'filter-two'],
 	})
 
-	assert(info.getFTypeList().length === 2)
-	assert(info.getFTypeList()[0] === 'filter-one')
+	assert(info.getFType().length === 2)
+	assert(info.getFType()[0] === 'filter-one')
 }
 
 
@@ -70,11 +70,11 @@ function doTestMap() {
 	const info = new pb.TestMapReq()
 	info.fromObject({
 		limit: 10,
-		gSimilarMap: [['one', 'name'], ['two', 'sex']]
+		gSimilar: [['one', 'name'], ['two', 'sex']]
 	})
 
-	assert(info.getGSimilarMap().getLength() === 2)
-	assert(info.getGSimilarMap().get('one') === 'name')
+	assert(info.getGSimilar().getLength() === 2)
+	assert(info.getGSimilar().get('one') === 'name')
 }
 
 

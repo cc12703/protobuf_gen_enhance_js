@@ -17,8 +17,8 @@ class AssistInfo {
 
 
 
-export function process(defAST: GoGoAST, implAST: GoGoAST, pInfo: ProtoInfo) {
-	const aInfo = buildAssistInfo(pInfo)
+export function process(defAST: GoGoAST, implAST: GoGoAST, pInfo: ProtoInfo, cInfo: util.EnhanceConfig) {
+	const aInfo = buildAssistInfo(pInfo, cInfo)
 
 	processDef(defAST, aInfo)
 	processImpl(implAST, aInfo)
@@ -38,14 +38,24 @@ function processImpl(ast: GoGoAST, aInfo: AssistInfo) {
 				Object.assign(attr.node, { 'name': replVal })
 			}	
 		})
+
+		item.find("msg.$_$fname()").each(callItem => {
+			callItem.match.fname.forEach(name => {
+				const key = `${typeName}.${name.value}`
+				const replVal = aInfo.methodNameMap.get(key)
+				if(replVal) {
+					Object.assign(name.node, { 'name': replVal })
+				}		
+			})	
+		})
 	})
 
 	ast.find("$_$type.deserializeBinaryFromReader = function(msg, reader) { }").each(item => {
 		const suffix = `proto.${aInfo.pkgName}.`
 		const typeName = item.match.type[0].value.replace(suffix, '')
 
-		item.find("msg.$_$name()").each(callItem => {
-			callItem.match.name.forEach(name => {
+		item.find("msg.$_$fname()").each(callItem => {
+			callItem.match.fname.forEach(name => {
 				const key = `${typeName}.${name.value}`
 				const replVal = aInfo.methodNameMap.get(key)
 				if(replVal) {
@@ -59,8 +69,8 @@ function processImpl(ast: GoGoAST, aInfo: AssistInfo) {
 		const suffix = `proto.${aInfo.pkgName}.`
 		const typeName = item.match.type[0].value.replace(suffix, '')
 
-		item.find("message.$_$name()").each(callItem => {
-			callItem.match.name.forEach(name => {
+		item.find("message.$_$fname()").each(callItem => {
+			callItem.match.fname.forEach(name => {
 				const key = `${typeName}.${name.value}`
 				const replVal = aInfo.methodNameMap.get(key)
 				if(replVal) {
@@ -80,6 +90,16 @@ function processImpl(ast: GoGoAST, aInfo: AssistInfo) {
 			if(replVal) {
 				Object.assign(name.node, { 'name': replVal })
 			}
+		})
+
+		item.find("this.$_$fname()").each(callItem => {
+			callItem.match.fname.forEach(name => {
+				const key = `${typeName}.${name.value}`
+				const replVal = aInfo.methodNameMap.get(key)
+				if(replVal) {
+					Object.assign(name.node, { 'name': replVal })
+				}		
+			})
 		})
 	})
 
@@ -131,29 +151,30 @@ function getTypeName(name: string, parentAST: any): string {
 }
 
 
-function buildAssistInfo(pInfo: ProtoInfo): AssistInfo {
+function buildAssistInfo(pInfo: ProtoInfo, cInfo: util.EnhanceConfig): AssistInfo {
 	const result = new AssistInfo()
 
 	result.pkgName = pInfo.package
-	result.fieldNameMap = buildFieldNameMap(pInfo)
-	result.methodNameMap = buildMethodNameMap(pInfo)
+	result.fieldNameMap = buildFieldNameMap(pInfo, cInfo)
+	result.methodNameMap = buildMethodNameMap(pInfo, cInfo)
 	//console.log(result)
 	return result
 }
 
-function buildFieldNameMap(pInfo: ProtoInfo): Map<string, string> {
+function buildFieldNameMap(pInfo: ProtoInfo, cInfo: util.EnhanceConfig): Map<string, string> {
 	const result = new Map<string, string>()
-	pInfo.messages.forEach(msg => fillFieldNameMap(msg, result))
+	pInfo.messages.forEach(msg => fillFieldNameMap(msg, cInfo, result))
 	return result
 }
 
 
-function fillFieldNameMap(mInfo: ProtoMessageInfo, out: Map<string, string>) {
+function fillFieldNameMap(mInfo: ProtoMessageInfo, cInfo: util.EnhanceConfig, 
+						 out: Map<string, string>) {
 	mInfo.fields.forEach(field => {
 		let suffix = getFieldNameSuffix(field)
 
 		const key = `${mInfo.name}.${field.name.toLowerCase()}${suffix}`
-		const value = `${field.name}${suffix}`
+		const value = cInfo.isDelTypeSuffix? field.name : `${field.name}${suffix}`
 		out.set(key, value)
 	})	
 }
@@ -171,34 +192,37 @@ function getFieldNameSuffix(field: ProtoFieldInfo): string {
 
 
 
-function buildMethodNameMap(pInfo: ProtoInfo): Map<string, string> {
+function buildMethodNameMap(pInfo: ProtoInfo, cInfo: util.EnhanceConfig): Map<string, string> {
 	const result = new Map<string, string>()
-	pInfo.messages.forEach(msg => fillMethodNameMap(msg, result))
+	pInfo.messages.forEach(msg => fillMethodNameMap(msg, cInfo, result))
 	return result
 }
 
-function fillMethodNameMap(mInfo: ProtoMessageInfo, out: Map<string, string>) {
+function fillMethodNameMap(mInfo: ProtoMessageInfo, cInfo: util.EnhanceConfig, 
+							out: Map<string, string>) {
 	mInfo.fields.forEach(field => {
 		if(field.type === ProtoFieldType.NORMAL) {
 			const templ = ['set*', 'get*']
-			fillMethodNameMapForField(mInfo.name, field.name, templ, out)
+			fillMethodNameMapForField(mInfo.name, field.name, templ, '', out)
 		}
 		else if(field.type === ProtoFieldType.LIST) {
 			const templ = ['clear*List', 'get*List', 'set*List', 'add*']
-			fillMethodNameMapForField(mInfo.name, field.name, templ, out)
+			const delSuffix = cInfo.isDelTypeSuffix? 'List' : ''
+			fillMethodNameMapForField(mInfo.name, field.name, templ, delSuffix, out)
 		}
 		else if(field.type === ProtoFieldType.MAP) {
 			const templ = ['get*Map', 'clear*Map']
-			fillMethodNameMapForField(mInfo.name, field.name, templ, out)
+			const delSuffix = cInfo.isDelTypeSuffix? 'Map' : ''
+			fillMethodNameMapForField(mInfo.name, field.name, templ, delSuffix, out)
 		}
 	})	
 }
 
-function fillMethodNameMapForField(mName: string, fName: string, nameTempl: string[], 
+function fillMethodNameMapForField(mName: string, fName: string, nameTempl: string[], delSuffix: string,
 									out: Map<string, string>) {
 	nameTempl.forEach(templ => {
 		const oldName = templ.replace('*', util.strToFirstUpperCase(fName.toLowerCase()))
-		const newName = templ.replace('*', util.strToFirstUpperCase(fName))
+		const newName = templ.replace('*', util.strToFirstUpperCase(fName)).replace(delSuffix, '')
 		out.set(`${mName}.${oldName}`, newName)
 	})
 }

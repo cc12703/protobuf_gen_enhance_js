@@ -140,9 +140,9 @@ export class TestListReq extends jspb.Message {
 				static buildObject(obj: TestListReq.AsObject): TestListReq
 				getPage(): number;
 setPage(value: number): TestListReq;
-clearFTypeList(): void;
-getFTypeList(): Array<string>;
-setFTypeList(value: Array<string>): TestListReq;
+clearFType(): void;
+getFType(): Array<string>;
+setFType(value: Array<string>): TestListReq;
 addFType(value: string, index?: number): string;
 serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
@@ -155,7 +155,7 @@ static deserializeBinaryFromReader(message: TestListReq, reader: jspb.BinaryRead
 export namespace TestListReq {
     export type AsObject = {
         page: number,
-        fTypeList: Array<string>,
+        fType: Array<string>,
     }
 }
 
@@ -188,8 +188,8 @@ export class TestMapReq extends jspb.Message {
 				static buildObject(obj: TestMapReq.AsObject): TestMapReq
 				getLimit(): number;
 setLimit(value: number): TestMapReq;
-getGSimilarMap(): jspb.Map<string, string>;
-clearGSimilarMap(): void;
+getGSimilar(): jspb.Map<string, string>;
+clearGSimilar(): void;
 serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
@@ -202,7 +202,7 @@ export namespace TestMapReq {
     export type AsObject = {
         limit: number,
 
-        gSimilarMap: Array<[string, string]>,
+        gSimilar: Array<[string, string]>,
     }
 }
 
