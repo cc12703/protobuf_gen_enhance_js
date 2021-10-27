@@ -1,6 +1,6 @@
 {
-  "name": "@cc12703m/pbGenerateEnhancer",
-  "version": "1.0.0",
+  "name": "@cc12703m/pb-generate-enhancer",
+  "version": "1.1.0",
   "description": "增强protobuf的生成文件",
   "bin": {
     "pbgen_enhance": "./bin/loader.js"

@@ -12,7 +12,7 @@ const OUTPUT_DIR = path.join(__dirname, '../out')
 
 
 async function doBuild() {
-	await main.enhance(INPUT_DIR, OUTPUT_DIR, PROTO_DIR)
+	await main.enhance(INPUT_DIR, OUTPUT_DIR, PROTO_DIR, true)
 }
 
 

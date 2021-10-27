@@ -13,16 +13,17 @@ import * as builder from '@/build'
 
 
 
-export async function enhance(inputDir: string, outputDir: string, protoDir: string) {
+export async function enhance(inputDir: string, outputDir: string, protoDir: string, isCopyOther: boolean) {
 
 	console.log(`cmd input ${inputDir}`)
 	console.log(`cmd output ${outputDir}`)
 	console.log(`cmd proto ${protoDir}`)
+	console.log(`cmd isCopyOther ${isCopyOther}`)
 
 	fse.ensureDirSync(outputDir)
 
-	const infos = await collecter.collectAll(inputDir)
-	for (const info of infos) {
+	const cInfo = await collecter.collectAll(inputDir)
+	for (const info of cInfo.getAll()) {
 		const pFile = path.join(protoDir, `${info.protoName}.proto`)
 		const pInfo = await protoer.parse(pFile)
 
@@ -35,6 +36,13 @@ export async function enhance(inputDir: string, outputDir: string, protoDir: str
 		writeToFile(defAST, info.defFile, outputDir)	
 		writeToFile(implAST, info.implFile, outputDir)	
 	}	
+
+	if(isCopyOther) {
+		for (const file of cInfo.other) {
+			const dstFile = path.join(outputDir, path.basename(file))
+			fse.copySync(file, dstFile)
+		}
+	}
 }
 
 
