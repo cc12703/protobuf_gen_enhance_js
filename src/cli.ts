@@ -2,6 +2,7 @@
 
 import pkg from 'root/package.json'
 import program from 'commander'
+import { exit } from 'process'
 
 import * as main from '@/main'
 import { EnhanceConfig } from '@/util'
@@ -14,11 +15,13 @@ program
 .option('-p, --proto <dir>', 'specify dir of proto file')
 .option('-c, --copyother', 'Copy Other File', false)
 .option('-s, --deltypesuffix', 'Delete Suffix of Type', false)
-.action((options) => {
+.action(async (options) => {
 	const cfg = new EnhanceConfig()
 	cfg.isCopyOther = options.copyother
 	cfg.isDelTypeSuffix = options.deltypesuffix
-	main.enhance(options.input, options.output, options.proto, cfg)
+	await main.enhance(options.input, options.output, options.proto, cfg)
+
+	exit(0)
 })
 
 program.parse(process.argv)

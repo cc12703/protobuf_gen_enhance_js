@@ -1,6 +1,7 @@
 
 
 import path from 'path'
+import { exit } from 'process'
 
 import * as main from '@/main'
 import { EnhanceConfig } from '@/util'
@@ -16,6 +17,7 @@ async function doBuild() {
 	cfg.isCopyOther = true
 	cfg.isDelTypeSuffix = true
 	await main.enhance(INPUT_DIR, OUTPUT_DIR, PROTO_DIR, cfg)
+	exit(0)
 }
 
 
