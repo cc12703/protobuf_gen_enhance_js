@@ -3,6 +3,7 @@
 'use strict';
 var grpc = require('@grpc/grpc-js');
 var collect_material_pb = require('./collect_material_pb.js');
+var collect_common_pb = require('./collect_common_pb.js');
 
 function serialize_collect_material_TestListReq(arg) {
   if (!(arg instanceof collect_material_pb.TestListReq)) {

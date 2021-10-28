@@ -1,4 +1,6 @@
 import protobuf from 'protobufjs'
+import lineReader from 'line-reader'
+import { rejects } from 'assert'
 
 
 export enum ProtoFieldType {
@@ -19,7 +21,7 @@ export class ProtoFieldInfo {
 	type: ProtoFieldType
 
 	dType = ProtoFieldDataType.NORMAL
-	dRefName = ''
+	dRefFullName = ''
 
 	constructor(name: string, type: ProtoFieldType) {
 		this.name = name
@@ -30,19 +32,17 @@ export class ProtoFieldInfo {
 
 
 export class ProtoMessageInfo {
-	name: string
+	fullName: string
 
 	fields: ProtoFieldInfo[] = []
 
 	constructor(name: string) {
-		this.name = name
+		this.fullName = name
 	}
 }
 
 export class ProtoInfo {
-
-	package: string = ''
-
+	pkgName: string = ''
 	messages: Map<string, ProtoMessageInfo> = new Map()
 
 }
@@ -51,32 +51,49 @@ export class ProtoInfo {
 export async function parse(protoFile: string): Promise<ProtoInfo> {
 	const root = await protobuf.load(protoFile)
 	const result = new ProtoInfo()
-	const pkgNames = []
-	const searchNS = []
-	searchNS.push(root.resolveAll())
-	while (searchNS.length > 0) {
-		const ns = searchNS.pop()
-		if(ns!!.name.length > 0) {
-			pkgNames.push(ns!!.name)
-		}
 
-		ns?.nestedArray.forEach(item => {
-			const itemType = Object.getPrototypeOf(item).toString()
-			if(itemType === 'Type') {
-				const mInfo = buildMessageInfo(item as protobuf.Type, result)
-				result.messages.set(mInfo.name, mInfo)
-			}
-			else if(itemType === 'Namespace') {
-				searchNS.push(item)	
-			}
-		})
-	}
+	parseNamespace(root.resolveAll(), '', result)
 
-	result.package = pkgNames.join('.')
+	result.pkgName = await findPkgName(protoFile)
 	return result
 }
 
 
+
+function findPkgName(protoFile: string): Promise<string> {
+	return new Promise((resolve,reject) => {
+		lineReader.eachLine(protoFile, function(line: string, last: boolean, cb:any) {
+			if(line) {
+				const result = line.match(/\s*package\s*([\w.]+)\s*;\s*/)
+				if(result) {
+					cb(false)
+					resolve(result[1])
+				}
+			}
+			
+			if(last) {
+				resolve('')
+			}
+			else {
+				cb()
+			}
+		})
+	})
+}
+
+function parseNamespace(ns: protobuf.NamespaceBase, pkgName: string, pInfo: ProtoInfo) {
+	ns?.nestedArray.forEach(item => {
+		const itemType = Object.getPrototypeOf(item).toString()
+		if(itemType === 'Type') {
+			const mInfo = buildMessageInfo(item as protobuf.Type, pInfo, pkgName)
+			pInfo.messages.set(mInfo.fullName, mInfo)
+		}
+		else if(itemType === 'Namespace') {
+			const curPkgName = (pkgName.length > 0)? `${pkgName}.${item.name}` : item.name
+			parseNamespace(item as protobuf.Namespace, curPkgName, pInfo)
+		}
+	})	
+}
 
 
 function buildMessageInfo(type: protobuf.Type, pInfo: ProtoInfo, namePrefix = ''): ProtoMessageInfo {
@@ -90,7 +107,7 @@ function buildMessageInfo(type: protobuf.Type, pInfo: ProtoInfo, namePrefix = ''
 	type.nestedArray.filter(nested => nested instanceof protobuf.Type)
 					.forEach(nested => {
 						const mInfo = buildMessageInfo(nested as protobuf.Type, pInfo, name)
-						pInfo.messages.set(mInfo.name, mInfo)
+						pInfo.messages.set(mInfo.fullName, mInfo)
 					})
 	return info
 }
@@ -107,12 +124,13 @@ function fillFieldDataType(fInfo: ProtoFieldInfo, field: protobuf.Field) {
 		let parent = field.resolvedType.parent
 		while(parent !== null) {
 			const pType = Object.getPrototypeOf(parent).toString()	
-			if(pType === 'Type') {
+			if((pType === 'Type') || (pType === 'Namespace')) {
 				refNames.push(parent.name)
 			}
+			
 			parent = parent.parent
 		}
-		fInfo.dRefName = refNames.reverse().join('.')
+		fInfo.dRefFullName = refNames.reverse().join('.')
 	}
 }
 

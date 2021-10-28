@@ -27,7 +27,7 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo, cInfo: util.EnhanceConfig) 
 	})
 	ast.find('$_$type.toObject = function(includeInstance, msg) {}').each(item => {
 		const type = item.match.type[0].value
-		const typeName = type.replace(`proto.${pInfo.package}.`, '')
+		const typeName = type.replace('proto.', '')
 		const codes = []
 
 		codes.push(`${type}.fromObject = function(obj, msg) {`)
@@ -65,7 +65,7 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo, cInfo: util.EnhanceConfig) 
 
 	ast.find('$_$type.toObject = function(includeInstance, msg) {}').each(item => {
 		const type = item.match.type[0].value
-		const typeName = type.replace(`proto.${pInfo.package}.`, '')
+		const typeName = type.replace('proto.', '')
 		const codes = []
 
 		codes.push(`${type}.buildObject = function(obj) {`)
@@ -77,6 +77,10 @@ function processImpl(ast: GoGoAST, pInfo: ProtoInfo, cInfo: util.EnhanceConfig) 
 		item.after(codes.join('\r'))
 	})
 }
+
+
+
+
 
 function buildFieldName(field: ProtoFieldInfo, cInfo: util.EnhanceConfig): string {
 	if(field.type === ProtoFieldType.NORMAL)
@@ -98,7 +102,7 @@ function buildTransformCodeOfNormal(varName: string, field: ProtoFieldInfo, pInf
 		return [`var ${varName} = obj.${fieldName};`]
 	}
 	else if(field.dType === ProtoFieldDataType.REF) {
-		return [`var ${varName} = new proto.${pInfo.package}.${field.dRefName};`, 
+		return [`var ${varName} = new proto.${field.dRefFullName};`, 
 				`${varName}.fromObject(obj.${fieldName});`]
 	}
 	
@@ -114,7 +118,7 @@ function buildTransformCodeOfList(varName: string, field: ProtoFieldInfo, pInfo:
 	}
 	else if(field.dType === ProtoFieldDataType.REF) {
 		return [`var ${varName} = obj.${fieldName}.map(item => {`, 
-				`  var ${varName}O = new proto.${pInfo.package}.${field.dRefName};`,
+				`  var ${varName}O = new proto.${field.dRefFullName};`,
 				`  ${varName}O.fromObject(item);`,
 				`  return ${varName}O;`,
 				`});`]
@@ -131,7 +135,7 @@ function buildTransformCodeOfMap(keyVarName: string, valVarName: string, field: 
 		return [`msg.get${util.strToFirstUpperCase(fieldName)}().set(${keyVarName}, ${valVarName})`]
 	}
 	else if(field.dType === ProtoFieldDataType.REF) {
-		return [`  var ${valVarName}O = new proto.${pInfo.package}.${field.dRefName};`,
+		return [`  var ${valVarName}O = new proto.${field.dRefFullName};`,
 				`  ${valVarName}O.fromObject(item);`,
 				`   msg.get${util.strToFirstUpperCase(fieldName)}().set(${keyVarName}, ${valVarName}O)`]
 	}

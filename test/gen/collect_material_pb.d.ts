@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as collect_common_pb from "./collect_common_pb";
 
 export class TestNormalReq extends jspb.Message { 
     getType(): string;
@@ -197,6 +198,72 @@ export class TestMapResp extends jspb.Message {
 }
 
 export namespace TestMapResp {
+    export type AsObject = {
+    }
+}
+
+export class TestCommonInfo extends jspb.Message { 
+    getUid(): number;
+    setUid(value: number): TestCommonInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TestCommonInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: TestCommonInfo): TestCommonInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TestCommonInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TestCommonInfo;
+    static deserializeBinaryFromReader(message: TestCommonInfo, reader: jspb.BinaryReader): TestCommonInfo;
+}
+
+export namespace TestCommonInfo {
+    export type AsObject = {
+        uid: number,
+    }
+}
+
+export class TestRefReq extends jspb.Message { 
+
+    hasStatus(): boolean;
+    clearStatus(): void;
+    getStatus(): collect_common_pb.AutoStatusInfo | undefined;
+    setStatus(value?: collect_common_pb.AutoStatusInfo): TestRefReq;
+
+    hasCommon(): boolean;
+    clearCommon(): void;
+    getCommon(): TestCommonInfo | undefined;
+    setCommon(value?: TestCommonInfo): TestRefReq;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TestRefReq.AsObject;
+    static toObject(includeInstance: boolean, msg: TestRefReq): TestRefReq.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TestRefReq, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TestRefReq;
+    static deserializeBinaryFromReader(message: TestRefReq, reader: jspb.BinaryReader): TestRefReq;
+}
+
+export namespace TestRefReq {
+    export type AsObject = {
+        status?: collect_common_pb.AutoStatusInfo.AsObject,
+        common?: TestCommonInfo.AsObject,
+    }
+}
+
+export class TestRefResp extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TestRefResp.AsObject;
+    static toObject(includeInstance: boolean, msg: TestRefResp): TestRefResp.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TestRefResp, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TestRefResp;
+    static deserializeBinaryFromReader(message: TestRefResp, reader: jspb.BinaryReader): TestRefResp;
+}
+
+export namespace TestRefResp {
     export type AsObject = {
     }
 }

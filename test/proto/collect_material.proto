@@ -1,7 +1,9 @@
 syntax = "proto3";
 
 
-package collect.material;
+import "collect_common.proto";
+
+ package 	collect.material  ;
 
 
 service Api {
@@ -51,3 +53,12 @@ message TestMapReq {
 message TestMapResp { }
 
 
+message TestCommonInfo {
+	int32 uid = 1;
+}
+
+message TestRefReq {
+	collect.common.AutoStatusInfo status = 1;
+	TestCommonInfo common = 2;
+}
+message TestRefResp { }

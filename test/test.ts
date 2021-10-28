@@ -3,7 +3,7 @@
 
 import assert from 'assert'
 import * as pb from 'root/out/collect_material_pb'
-
+import { AutoStatusInfo } from 'root/out/collect_common_pb'
 
 
 
@@ -78,6 +78,16 @@ function doTestMap() {
 }
 
 
+function doTestNoPkgName() {
+	const info = new AutoStatusInfo()
+	info.fromObject({
+		devID: 'test-id',
+		devStatus: 'test-status'
+	}) 
+
+	assert(info.getDevID() === 'test-id')
+	assert(info.getDevStatus() === 'test-status')
+}
 
 
 doTestNormal()
@@ -86,3 +96,5 @@ doTestList()
 doTestMap()
 
 doTestNormalForBuild()
+
+doTestNoPkgName()

@@ -17,7 +17,7 @@ const OUTPUT_DIR = path.join(__dirname, '../out')
 
 
 
-async function testParse() {
+async function testParseProto() {
 	const info = await proto.parse(path.join(PROTO_DIR, 'collect_material.proto'))
 	 
 	info.messages.forEach(msg => {
@@ -31,6 +31,13 @@ async function testCollect() {
 	console.log(infos)
 }
 
+
+async function testParseDefine() {
+	gogocode.loadFile(path.join(INPUT_DIR, 'collect_material_pb.d.ts'), {})
+	.find("// package: $_$name").each(item => {
+		console.log(item.match.name)
+	})
+}
 
 async function testModifySource() {
 	const newCode = gogocode.loadFile(path.join(INPUT_DIR, 'collect_material_pb.d.ts'), {})
@@ -96,5 +103,5 @@ function testAddSouce() {
 
 //testCollect()
 //testParse()
-//testModifySource()
+testParseDefine()
 //testAddSouce()

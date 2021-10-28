@@ -6,6 +6,7 @@
 
 import * as grpc from "@grpc/grpc-js";
 import * as collect_material_pb from "./collect_material_pb";
+import * as collect_common_pb from "./collect_common_pb";
 
 interface IApiService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     testNormal: IApiService_ItestNormal;

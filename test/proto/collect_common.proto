@@ -1,0 +1,11 @@
+
+syntax = "proto3";
+
+
+package collect.common;
+
+
+message AutoStatusInfo {
+	string devID = 1;
+	string devStatus = 2;
+}
