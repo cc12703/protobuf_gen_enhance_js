@@ -167,6 +167,9 @@ export class TestMapReq extends jspb.Message {
     getGsimilarMap(): jspb.Map<string, string>;
     clearGsimilarMap(): void;
 
+    getGcommonMap(): jspb.Map<string, TestCommonInfo>;
+    clearGcommonMap(): void;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): TestMapReq.AsObject;
     static toObject(includeInstance: boolean, msg: TestMapReq): TestMapReq.AsObject;
@@ -182,6 +185,8 @@ export namespace TestMapReq {
         limit: number,
 
         gsimilarMap: Array<[string, string]>,
+
+        gcommonMap: Array<[string, TestCommonInfo.AsObject]>,
     }
 }
 

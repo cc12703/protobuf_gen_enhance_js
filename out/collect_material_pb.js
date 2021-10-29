@@ -1460,7 +1460,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   proto.collect.material.TestMapReq.toObject = function(includeInstance, msg) {
     var f, obj = {
       limit: jspb.Message.getFieldWithDefault(msg, 1, 0),
-      gSimilar: (f = msg.getGSimilar()) ? f.toObject(includeInstance, undefined) : []
+      gSimilar: (f = msg.getGSimilar()) ? f.toObject(includeInstance, undefined) : [],
+      gCommon: (f = msg.getGCommon()) ? f.toObject(includeInstance, proto.collect.material.TestCommonInfo.toObject) : []
     };
 
     if (includeInstance) {
@@ -1483,6 +1484,15 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
   var vgSimilarKey = pair[0];
   var vgSimilarVal = pair[1];
   msg.getGSimilar().set(vgSimilarKey, vgSimilarVal)
+  })
+  }
+  if('gCommon' in obj) {
+  obj.gCommon.forEach(pair => {
+  var vgCommonKey = pair[0];
+  var vgCommonVal = pair[1];
+    var vgCommonValO = new proto.collect.material.TestCommonInfo;
+    vgCommonValO.fromObject(vgCommonVal);
+     msg.getGCommon().set(vgCommonKey, vgCommonValO)
   })
   }
   };
@@ -1525,6 +1535,12 @@ proto.collect.material.TestMapReq.deserializeBinaryFromReader = function(msg, re
         jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
          });
       break;
+    case 3:
+      var value = msg.getGCommon();
+      reader.readMessage(value, function(message, reader) {
+        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readMessage, proto.collect.material.TestCommonInfo.deserializeBinaryFromReader, "", new proto.collect.material.TestCommonInfo());
+         });
+      break;
     default:
       reader.skipField();
       break;
@@ -1564,6 +1580,10 @@ proto.collect.material.TestMapReq.serializeBinaryToWriter = function(message, wr
   f = message.getGSimilar(true);
   if (f && f.getLength() > 0) {
     f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
+  }
+  f = message.getGCommon(true);
+  if (f && f.getLength() > 0) {
+    f.serializeBinary(3, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.collect.material.TestCommonInfo.serializeBinaryToWriter);
   }
 };
 
@@ -1605,6 +1625,28 @@ proto.collect.material.TestMapReq.prototype.getGSimilar = function(opt_noLazyCre
  */
 proto.collect.material.TestMapReq.prototype.clearGSimilar = function() {
   this.getGSimilar().clear();
+  return this;};
+
+
+/**
+ * map<string, TestCommonInfo> gCommon = 3;
+ * @param {boolean=} opt_noLazyCreate Do not create the map if
+ * empty, instead returning `undefined`
+ * @return {!jspb.Map<string,!proto.collect.material.TestCommonInfo>}
+ */
+proto.collect.material.TestMapReq.prototype.getGCommon = function(opt_noLazyCreate) {
+  return /** @type {!jspb.Map<string,!proto.collect.material.TestCommonInfo>} */ (
+      jspb.Message.getMapField(this, 3, opt_noLazyCreate,
+      proto.collect.material.TestCommonInfo));
+};
+
+
+/**
+ * Clears values from the map. The map will be non-null.
+ * @return {!proto.collect.material.TestMapReq} returns this
+ */
+proto.collect.material.TestMapReq.prototype.clearGCommon = function() {
+  this.getGCommon().clear();
   return this;};
 
 

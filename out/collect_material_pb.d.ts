@@ -191,6 +191,8 @@ export class TestMapReq extends jspb.Message {
 setLimit(value: number): TestMapReq;
 getGSimilar(): jspb.Map<string, string>;
 clearGSimilar(): void;
+getGCommon(): jspb.Map<string, TestCommonInfo>;
+clearGCommon(): void;
 serializeBinary(): Uint8Array;
 static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
 static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
@@ -204,6 +206,8 @@ export namespace TestMapReq {
         limit: number,
 
         gSimilar: Array<[string, string]>,
+
+        gCommon: Array<[string, TestCommonInfo.AsObject]>,
     }
 }
 

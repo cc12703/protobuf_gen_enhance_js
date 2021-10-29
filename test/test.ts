@@ -70,11 +70,14 @@ function doTestMap() {
 	const info = new pb.TestMapReq()
 	info.fromObject({
 		limit: 10,
-		gSimilar: [['one', 'name'], ['two', 'sex']]
+		gSimilar: [['one', 'name'], ['two', 'sex']],
+		gCommon: [['one', {uid: 1234}]]
+		
 	})
 
 	assert(info.getGSimilar().getLength() === 2)
 	assert(info.getGSimilar().get('one') === 'name')
+	assert(info.getGCommon().get('one')?.getUid() === 1234)
 }
 
 

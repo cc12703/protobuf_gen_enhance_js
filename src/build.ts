@@ -136,7 +136,7 @@ function buildTransformCodeOfMap(keyVarName: string, valVarName: string, field: 
 	}
 	else if(field.dType === ProtoFieldDataType.REF) {
 		return [`  var ${valVarName}O = new proto.${field.dRefFullName};`,
-				`  ${valVarName}O.fromObject(item);`,
+				`  ${valVarName}O.fromObject(${valVarName});`,
 				`   msg.get${util.strToFirstUpperCase(fieldName)}().set(${keyVarName}, ${valVarName}O)`]
 	}
 
