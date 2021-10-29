@@ -80,6 +80,16 @@ function doTestMap() {
 	assert(info.getGCommon().get('one')?.getUid() === 1234)
 }
 
+function doTestMapEmpty() {
+	const info = new pb.TestMapReq()
+	info.fromObject({
+		limit: 10,
+		gSimilar: [['one', 'name']]
+	} as any)
+
+	assert(info.getGSimilar().getLength() === 1)
+	assert(info.getGCommon().getLength() === 0)
+}
 
 function doTestNoPkgName() {
 	const info = new AutoStatusInfo()
@@ -97,6 +107,7 @@ doTestNormal()
 doTestNest()
 doTestList()
 doTestMap()
+doTestMapEmpty()
 
 doTestNormalForBuild()
 
